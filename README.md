@@ -46,13 +46,15 @@ const toast = new Toast()
 
 ### Showing Toasts
 
-You can show different types of toasts calling a method from the `Toast` instance with the name of the type you want to show, following this syntax:
+You can show different types of toasts calling a method from the `Toast` instance with the name of
+the type you want to show, following this syntax:
 
 ```javascript
 toast.$toastType($content, $options)
 ```
 
-- where `$toastType` can be one of the following: `default`, `success`, `error`, `warning`, `info`, or `loading`.
+- where `$toastType` can be one of the following: `default`, `success`, `error`, `warning`, `info`,
+  or `loading`.
 - where `$content` is a string with the message you want to show
 - where `$options` is an object with the following properties:
   - `title` (default `<empty string>`): string
@@ -60,9 +62,14 @@ toast.$toastType($content, $options)
   - `showCloseButton` (default `false`): boolean
   - `closeButtonPosition` (default `'tr'`): `'tl'` | `'tr'`
 
-The properties: `durationMs`, `showCloseButton`, and `closeButtonPosition` can also be specified when creating an instance of the `Toast` class, that way if you want to change one of this properties default value for all toasts you can simply set it when creating the instance instead of specifying it every time you call a method to show a toast.
+The properties: `durationMs`, `showCloseButton`, and `closeButtonPosition` can also be specified
+when creating an instance of the `Toast` class, that way if you want to change one of this
+properties default value for all toasts you can simply set it when creating the instance instead of
+specifying it every time you call a method to show a toast.
 
-Also if you want to change one of this properties for all toasts but you want only one of them to have a different value, you could always specify it when calling the toast instance method, since this options have a higher priority than the ones set when creating the `Toast` instance.
+Also if you want to change one of this properties for all toasts but you want only one of them to
+have a different value, you could always specify it when calling the toast instance method, since
+this options have a higher priority than the ones set when creating the `Toast` instance.
 
 For example, if you create this instance:
 
@@ -74,7 +81,8 @@ const toast = new Toast({
 })
 ```
 
-All toasts by default will now show for 10 seconds, and have a close button at the top right corner; but if you want to change this on one of your toasts you could always do it like so:
+All toasts by default will now show for 10 seconds, and have a close button at the top right corner;
+but if you want to change this on one of your toasts you could always do it like so:
 
 ```javascript
 toast.success('success toast with different options than the Toast instance', {
@@ -83,7 +91,8 @@ toast.success('success toast with different options than the Toast instance', {
 })
 ```
 
-Check out an example calling each of the available methods from the `toast` instance for each of the available `$toastType` values:
+Check out an example calling each of the available methods from the `toast` instance for each of the
+available `$toastType` values:
 
 #### Default Toast
 
@@ -187,69 +196,81 @@ toast.loading('This is a loading toast', {
 
 ### Removing a Toast
 
-You can force a toast to be removed from the UI calling the `remove` method from the toast instance with the toastId:
+You can force a toast to be removed from the UI calling the `remove` method from the toast instance
+with the toastId:
 
 ```javascript
 const toastId = toast.success('This toast will be removed soon')
 toast.remove(toastId)
 ```
 
-> Note: all methods shown before (default, success, error, warning, info) return the toastId which can be used to remove the toast later by calling the toast.remove method
+> Note: all methods shown before (default, success, error, warning, info) return the toastId which
+> can be used to remove the toast later by calling the toast.remove method
 
 ### Using Promises with Toasts
 
 You can show toasts based on the state of a promise:
 
 ```javascript
-toast.promise(
-  fetch('https://api.weather.gov/'),
-  {
-    loading: {
-      content: 'Loading weather data',
-      title: 'Loading' // <- optional property
+toast
+  .promise(
+    fetch('https://api.weather.gov/'),
+    {
+      loading: {
+        content: 'Loading weather data',
+        title: 'Loading' // <- optional property
+      },
+      success: {
+        content: 'Weather data loaded',
+        title: 'Success' // <- optional property
+      },
+      error: {
+        content: 'Error loading weather data',
+        title: 'Error' // <- optional property
+      }
     },
-    success: {
-      content: 'Weather data loaded',
-      title: 'Success' // <- optional property
-    },
-    error: {
-      content: 'Error loading weather data',
-      title: 'Error' // <- optional property
+    {
+      durationWhenDoneMs: 7000, // <- optional property (default = 5000)
+      showCloseButtonWhenDone: true, // <- optional property (default = false)
+      closeButtonPositionWhenDone: 'tr'
     }
-  },
-  {
-    durationWhenDoneMs: 7000, // <- optional property (default = 5000)
-    showCloseButtonWhenDone: true, // <- optional property (default = false)
-    closeButtonPositionWhenDone: 'tr'
-  }
-).then(res => {
-  console.log(res)
-}).catch(err => {
-  console.error(err)
-})
+  )
+  .then((res) => {
+    console.log(res)
+  })
+  .catch((err) => {
+    console.error(err)
+  })
 ```
 
-Keep in mind that setting different values for the `durationMs`, `showCloseButton`, and `closeButtonPosition` when creating an instance of the `Toast` class, will change the default values of the `durationWhenDoneMs`, `showCloseButtonWhenDone`, `closeButtonPositionWhenDone` optional properties respectively.
+Keep in mind that setting different values for the `durationMs`, `showCloseButton`, and
+`closeButtonPosition` when creating an instance of the `Toast` class, will change the default values
+of the `durationWhenDoneMs`, `showCloseButtonWhenDone`, `closeButtonPositionWhenDone` optional
+properties respectively.
 
 ## Configuration Options
 
 ### Toast Class Constructor Options
 
-- `position` (default: `'br'`): Position of the toasts container. Possible values: `'tl'`, `'tr'`, `'bl'`, `'br'`, `'tc'`, `'bc'`.
+- `position` (default: `'br'`): Position of the toasts container. Possible values: `'tl'`, `'tr'`,
+  `'bl'`, `'br'`, `'tc'`, `'bc'`.
 - `maxWidthPx` (default: `400`): Maximum width of the toasts container in pixels.
 - `defaultIconSizePx` (default: `18`): Default size of the icons in pixels.
 - `richColors` (default: `true`): Whether to use rich colors for different toast types.
 - `preventClosingOnHover` (default: `true`): Whether to prevent the toast from closing when hovered.
 - `durationMs` (default: `5000`): Duration in milliseconds before the toast disappears.
 - `showCloseButton` (default: `false`): Whether to show a close button on the toasts.
-- `closeButtonPosition` (default: `'tr'`): Position of the close button. Possible values: `'tr'` (top-right), `'tl'` (top-left).
+- `closeButtonPosition` (default: `'tr'`): Position of the close button. Possible values: `'tr'`
+  (top-right), `'tl'` (top-left).
 
 ### Toast Options
 
 - `title` (optional): Title of the toast.
 - `showCloseButton` (optional): Whether to show a close button on the toast.
 - `closeButtonPosition` (optional): Position of the close button. Possible values: 'tr', 'tl'.
-- `durationMs` (default: 5000): Duration in milliseconds before the toast disappears. Use Infinity to keep the toast visible indefinitely (you need to make sure to remove the toast using the remove method if you set Infinity as the duration).
+- `durationMs` (default: 5000): Duration in milliseconds before the toast disappears. Use Infinity
+  to keep the toast visible indefinitely (you need to make sure to remove the toast using the remove
+  method if you set Infinity as the duration).
 
 ## Methods
 
@@ -257,36 +278,29 @@ Keep in mind that setting different values for the `durationMs`, `showCloseButto
 
 `default(content: string, options?: ToastOptionsType)`
 
-
 - **Shows a success toast:**
 
 `success(content: string, options?: ToastOptionsType)`
-
 
 - **Shows an error toast:**
 
 `error(content: string, options?: ToastOptionsType)`
 
-
 - **Shows a warning toast:**
 
 `warning(content: string, options?: ToastOptionsType)`
-
 
 - **Shows an info toast:**
 
 `info(content: string, options?: ToastOptionsType)`
 
-
 - **Shows a loading toast:**
 
 `loading(content: string, options?: ToastOptionsType)`
 
-
 - **Removes a toast by its ID:**
 
 `remove(toastId: string)`
-
 
 - **Shows toasts based on the state of a promise:**
 
@@ -304,4 +318,57 @@ promise(
     closeButtonPositionWhenDone?: ToastCloseButtonPositionsType
   }
 )
+```
+
+## Using the Library with a CDN
+
+For those who want to use the library without a bundler, you can import the JS and CSS files using a
+CDN.
+
+### JS and CSS CDN Links
+
+Use the following links to include the library in your project:
+
+- **JS**: `https://cdn.jsdelivr.net/gh/jorgeabrahan/vanilla-js-toast@main/dist/index.esm.js`
+- **CSS**: `https://cdn.jsdelivr.net/gh/jorgeabrahan/vanilla-js-toast@main/dist/toast.css`
+
+### Example Usage with CDN
+
+Include the following in your HTML file:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vanilla JS Toast Example</title>
+    <!-- Import the CSS file from the CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/jorgeabrahan/vanilla-js-toast@main/dist/toast.css"
+    />
+  </head>
+  <body>
+    <script
+      src="https://cdn.jsdelivr.net/gh/jorgeabrahan/vanilla-js-toast@main/dist/index.esm.js"
+      type="module"
+    ></script>
+    <script type="module">
+      import { Toast } from 'https://cdn.jsdelivr.net/gh/jorgeabrahan/vanilla-js-toast@main/dist/index.esm.js'
+
+      const toast = new Toast({
+        position: 'br',
+        maxWidthPx: 400,
+        defaultIconSizePx: 18,
+        richColors: true,
+        showCloseButton: false,
+        preventClosingOnHover: true,
+        closeButtonPosition: 'tr'
+      })
+
+      toast.success('This is a success toast message')
+    </script>
+  </body>
+</html>
 ```
