@@ -264,15 +264,3 @@ export class Toast {
     }
   }
 }
-
-export type ToastType = InstanceType<typeof Toast>;
-
-export type {
-  PromiseToastOptionsType,
-  PromiseToastToastsType,
-  ToastCloseButtonPositionsType,
-  ToastConstructorOptionsType,
-  ToastOptionsType,
-  ToastPositionsType,
-  ToastTypesType
-}
