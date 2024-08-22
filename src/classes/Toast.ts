@@ -6,7 +6,11 @@ import {
 } from '../lib/consts'
 import { xmarkIcon } from '../lib/icons'
 import type {
+  PromiseToastOptionsType,
+  PromiseToastToastsType,
   ToastCloseButtonPositionsType,
+  ToastConstructorOptionsType,
+  ToastHtmlOptionsType,
   ToastOptionsType,
   ToastPositionsType,
   ToastTypesType
@@ -31,16 +35,7 @@ export class Toast {
     durationMs = 5000,
     showCloseButton = false,
     closeButtonPosition = TOAST_CLOSE_BUTTON_POSITIONS.tr
-  }: {
-    position?: ToastPositionsType
-    maxWidthPx?: number
-    defaultIconSizePx?: number
-    richColors?: boolean
-    durationMs?: number
-    showCloseButton?: boolean
-    preventClosingOnHover?: boolean
-    closeButtonPosition?: ToastCloseButtonPositionsType
-  } = {}) {
+  }: ToastConstructorOptionsType = {}) {
     this.#toastsContainer = document.createElement('div')
     this.#toastsContainer.classList.add(`${this.#toastClassesPrefix}-toasts`)
     this.#toastsContainer.style.maxWidth = `${maxWidthPx}px`
@@ -64,13 +59,7 @@ export class Toast {
     type = TOAST_TYPES.default,
     showCloseButton,
     closeButtonPosition
-  }: {
-    title?: string
-    content: string
-    type?: ToastTypesType
-    showCloseButton?: boolean
-    closeButtonPosition?: ToastCloseButtonPositionsType
-  }) {
+  }: ToastHtmlOptionsType) {
     const toastContainer = document.createElement('div')
     toastContainer.classList.add(`${this.#toastClassesPrefix}-toast`)
     if (type !== TOAST_TYPES.default && type !== TOAST_TYPES.loading && this.#toastRichColors) {
@@ -204,16 +193,8 @@ export class Toast {
   }
   promise(
     promise: Promise<any>,
-    toasts: {
-      loading: { content: string; title?: string }
-      success: { content: string; title?: string }
-      error: { content: string; title?: string }
-    },
-    options: {
-      durationWhenDoneMs?: number
-      showCloseButtonWhenDone?: boolean
-      closeButtonPositionWhenDone?: ToastCloseButtonPositionsType
-    } = {}
+    toasts: PromiseToastToastsType,
+    options: PromiseToastOptionsType = {}
   ) {
     const toastId = this.loading(toasts.loading.content, {
       title: toasts.loading?.title,
@@ -282,4 +263,16 @@ export class Toast {
       this.#toastsContainer.style.transform = 'translateX(-50%)'
     }
   }
+}
+
+export type ToastType = InstanceType<typeof Toast>;
+
+export type {
+  PromiseToastOptionsType,
+  PromiseToastToastsType,
+  ToastCloseButtonPositionsType,
+  ToastConstructorOptionsType,
+  ToastOptionsType,
+  ToastPositionsType,
+  ToastTypesType
 }
