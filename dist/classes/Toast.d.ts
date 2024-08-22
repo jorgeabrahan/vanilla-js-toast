@@ -1,16 +1,7 @@
-import type { ToastCloseButtonPositionsType, ToastOptionsType, ToastPositionsType } from '../lib/types';
+import type { PromiseToastOptionsType, PromiseToastToastsType, ToastCloseButtonPositionsType, ToastConstructorOptionsType, ToastOptionsType, ToastPositionsType, ToastTypesType } from '../lib/types';
 export declare class Toast {
     #private;
-    constructor({ position, maxWidthPx, defaultIconSizePx, richColors, preventClosingOnHover, durationMs, showCloseButton, closeButtonPosition }?: {
-        position?: ToastPositionsType;
-        maxWidthPx?: number;
-        defaultIconSizePx?: number;
-        richColors?: boolean;
-        durationMs?: number;
-        showCloseButton?: boolean;
-        preventClosingOnHover?: boolean;
-        closeButtonPosition?: ToastCloseButtonPositionsType;
-    });
+    constructor({ position, maxWidthPx, defaultIconSizePx, richColors, preventClosingOnHover, durationMs, showCloseButton, closeButtonPosition }?: ToastConstructorOptionsType);
     remove(toastId: string): void;
     default(content: string, options?: ToastOptionsType): string;
     success(content: string, options?: ToastOptionsType): string;
@@ -18,22 +9,7 @@ export declare class Toast {
     warning(content: string, options?: ToastOptionsType): string;
     info(content: string, options?: ToastOptionsType): string;
     loading(content: string, options?: ToastOptionsType): string;
-    promise(promise: Promise<any>, toasts: {
-        loading: {
-            content: string;
-            title?: string;
-        };
-        success: {
-            content: string;
-            title?: string;
-        };
-        error: {
-            content: string;
-            title?: string;
-        };
-    }, options?: {
-        durationWhenDoneMs?: number;
-        showCloseButtonWhenDone?: boolean;
-        closeButtonPositionWhenDone?: ToastCloseButtonPositionsType;
-    }): Promise<any>;
+    promise(promise: Promise<any>, toasts: PromiseToastToastsType, options?: PromiseToastOptionsType): Promise<any>;
 }
+export type ToastType = InstanceType<typeof Toast>;
+export type { PromiseToastOptionsType, PromiseToastToastsType, ToastCloseButtonPositionsType, ToastConstructorOptionsType, ToastOptionsType, ToastPositionsType, ToastTypesType };
