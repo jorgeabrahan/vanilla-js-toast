@@ -1,6 +1,6 @@
 {
   "name": "vanilla-js-toast",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "A simple vanilla JS toast notification library",
   "main": "dist/index.cjs",
   "module": "dist/index.esm.js",
