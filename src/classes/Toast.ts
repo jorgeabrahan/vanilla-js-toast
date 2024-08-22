@@ -264,3 +264,13 @@ export class Toast {
     }
   }
 }
+
+export type {
+  ToastConstructorOptionsType,
+  ToastOptionsType,
+  ToastPositionsType,
+  ToastTypesType,
+  PromiseToastOptionsType,
+  PromiseToastToastsType,
+  ToastCloseButtonPositionsType
+}

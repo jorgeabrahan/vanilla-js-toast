@@ -1,4 +1,4 @@
-import type { PromiseToastOptionsType, PromiseToastToastsType, ToastConstructorOptionsType, ToastOptionsType } from '../lib/types';
+import type { PromiseToastOptionsType, PromiseToastToastsType, ToastCloseButtonPositionsType, ToastConstructorOptionsType, ToastOptionsType, ToastPositionsType, ToastTypesType } from '../lib/types';
 export declare class Toast {
     #private;
     constructor({ position, maxWidthPx, defaultIconSizePx, richColors, preventClosingOnHover, durationMs, showCloseButton, closeButtonPosition }?: ToastConstructorOptionsType);
@@ -11,3 +11,4 @@ export declare class Toast {
     loading(content: string, options?: ToastOptionsType): string;
     promise(promise: Promise<any>, toasts: PromiseToastToastsType, options?: PromiseToastOptionsType): Promise<any>;
 }
+export type { ToastConstructorOptionsType, ToastOptionsType, ToastPositionsType, ToastTypesType, PromiseToastOptionsType, PromiseToastToastsType, ToastCloseButtonPositionsType };
