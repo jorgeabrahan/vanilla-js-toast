@@ -372,3 +372,62 @@ Include the following in your HTML file:
   </body>
 </html>
 ```
+
+## Replacing Toasts
+
+The vanilla-js-toast library allows you to replace the content of an existing toast by using the replaceToastId option. This is useful when you want to update the message or type of a toast without creating a new one.
+
+### Example Usage
+
+Here is an example of how to use the replaceToastId option to replace a toast:
+
+```javascript
+const btnFetchData = document.getElementById('btnFetchData')
+btnFetchData.addEventListener('click', () => {
+  // Show a loading toast
+  const toastId = toast.loading('Removing element', {
+    durationMs: Infinity
+  })
+
+  // Simulate a server request
+  simulateFetchDataFromServer().then((res) => {
+    if (!res.ok) {
+      // Replace the loading toast with a warning toast if the request fails
+      toast.warning('The element could not be removed', {
+        replaceToastId: toastId
+      })
+      return
+    }
+
+    // Replace the loading toast with an action toast if the request succeeds
+    toast.action('The element was removed', {
+      label: 'Undo',
+      onClick: () => {
+        console.log('Undo clicked')
+      }
+    }, {
+      replaceToastId: toastId,
+      showCloseButton: true
+    })
+  }).catch(() => {
+    // Replace the loading toast with an error toast if there is an error
+    toast.error('Error removing element', {
+      replaceToastId: toastId
+    })
+  })
+})
+```
+
+In this example:
+
+- A loading toast is shown when the button is clicked.
+- If the simulated server request fails, the loading toast is replaced with a warning toast.
+- If the request succeeds, the loading toast is replaced with an action toast that includes an “Undo” button.
+- If there is an error during the request, the loading toast is replaced with an error toast.
+
+> By using the `replaceToastId` option, you can ensure that only one toast is displayed at a time, and you can update its content based on the result of asynchronous operations.
+
+### Important Notes
+1- Indefinite Duration: The loading toast is shown with `durationMs` set to `Infinity` to keep it visible indefinitely, as the time required to resolve the promise is unknown.
+
+2- Timeout Management: Setting `durationMs` to `Infinity` does not mean the toast will never be hidden. When the loading toast is replaced by another toast, the original timeout is cleared, and a new timeout is created with the `durationMs` of the replacement toast. For example, if the loading toast had a `durationMs` of 5 seconds and was replaced by the `toast.action` toast at the 4th second, the toast would not disappear at the 5th second. Instead, the previous timer is cleared, and a new timer is set with the `durationMs` of the `toast.action` toast.

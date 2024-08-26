@@ -6,3 +6,4 @@ export * from './ToastConstructorOptionsType';
 export * from './PromiseToastOptionsType';
 export * from './PromoiseToastToastsType';
 export * from './ToastHtmlOptionsType';
+export * from './ActionToastActionType';

@@ -4,4 +4,5 @@ export type ToastOptionsType = {
     durationMs?: number;
     showCloseButton?: boolean;
     closeButtonPosition?: ToastCloseButtonPositionsType;
+    replaceToastId?: string;
 };
